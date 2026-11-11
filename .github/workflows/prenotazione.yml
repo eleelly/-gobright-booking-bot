@@ -1,0 +1,30 @@
+
+name: GoBright Prenotazione
+
+on:
+  schedule:
+    - cron: '0 21 * * *'
+      timezone: "Europe/Rome"
+  workflow_dispatch:
+
+jobs:
+  prenotazione:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Calcola prenotazione
+        env:
+          TZ: Europe/Rome
+        run: |
+          python - <<'PY'
+          from datetime import datetime, timedelta
+          from zoneinfo import ZoneInfo
+
+          now = datetime.now(ZoneInfo("Europe/Rome"))
+          tomorrow = now.date() + timedelta(days=1)
+
+          print("GoBright - Test automazione")
+          print("Data:", tomorrow)
+          print("Postazione: Desk Stud 78")
+          print("Orario: 15:00 - 19:00")
+          print("Modalita: TEST - nessuna prenotazione")
+          PY
